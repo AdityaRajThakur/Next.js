@@ -1,27 +1,24 @@
-import { PrismaClient } from "@prisma/client";
-import { NextRequest } from "next/server";
-
-const prisma = new PrismaClient();
-
-export async function GET() {
-  const res = await prisma.user.findFirst({});
+import { NextResponse } from "next/server";
+//import { PrismaClient } from "@prisma/client";
+import prisma from '@/db/index';
+// const prisma = new PrismaClient();
+export async function POST(res: NextResponse) {
+  const body = await res.json();
+  console.log(body.username);
+  try {
+    await prisma.user.create({
+      data: {
+        username: body.username,
+        password: body.password
+      }
+    })
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({
+      Message: 'Failed to create user successfully'
+    })
+  }
   return Response.json({
-    "username": res?.username,
-    "email": res?.username
-
-  });
-}
-
-export async function POST(req: NextRequest) {
-  const res = await req.json();
-  const ans = await prisma.user.create({
-    data: {
-      username: res.username,
-      password: res.password
-    }
+    Message: "created successfully"
   })
-  console.log(res);
-  return Response.json({
-    message: "Message sent successfully"
-  })
-}
+} 

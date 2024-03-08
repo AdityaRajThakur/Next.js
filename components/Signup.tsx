@@ -1,4 +1,5 @@
 "use client"
+import { signup } from "@/app/actions/users";
 import axios from "axios";
 import { ChangeEventHandler, useState } from "react";
 
@@ -23,14 +24,8 @@ export default function Signup() {
               setPassword(e.target.value)
             }} label="Password" type={"password"} placeholder="123456" />
             <button onClick={async () => {
-              const res = axios({
-                method: 'post',
-                url: 'http://localhost:3000/api/user',
-                data: {
-                  username,
-                  password
-                }
-              })
+              const res = await signup(username, password);
+              console.log(res);
             }} type="button" className="mt-8 w-full text-white bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Sign in</button>
           </div>
         </div>

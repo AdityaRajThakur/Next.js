@@ -1,8 +1,8 @@
 import axios from "axios";
-import { PrismaClient } from "@prisma/client";
+//import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
-
-const prisma = new PrismaClient();
+import prisma from "@/db";
+//const prisma = new PrismaClient();
 
 async function getData() {
   try {
